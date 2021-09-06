@@ -1,0 +1,94 @@
+<style>
+        
+   
+    table {
+font-family: "Lato","sans-serif";   }       /* added custom font-family  */
+ 
+table.one {                                  
+margin-bottom: 3em; 
+border-collapse:collapse;   }   
+ 
+td {                            /* removed the border from the table data rows  */
+text-align: center;     
+width: 144em;                    
+padding: 8px;
+font-size: 1.3rem;    }       
+ 
+th {                              /* removed the border from the table heading row  */
+text-align: center;                 
+padding: 8px;
+background-color: lightblue;       /* added a red background color to the heading cells  */
+color: white; 
+font-size: 1.5rem;      }                 /* added a white font color to the heading text */
+ 
+tr {    
+height: 1em;    }
+ 
+table tr:nth-child(even) {            /* added all even rows a #eee color  */
+    background-color: #eee;     }
+ 
+table tr:nth-child(odd) {            /* added all odd rows a #fff color  */
+background-color:#fff;      }
+.container{
+text-align: right;
+top: 15px;
+bottom: 15px;
+}
+.class{
+height: 32px;
+margin: 1px; 
+width: 68px;
+}
+
+</style>
+</head>  
+<body>  
+<table style="width:100%;">
+<h1 style="text-align: center;font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+font-weight: bolder; font-size: 200%;"><center> Transaction Inward Ledger</center></h1>
+
+<div  style="margin: 8 auto; width:200px;  float:right; position:absolute;top:30px;right:-5px; font-weight: 500;">
+  
+    <button  onclick="location.href='/Create_Method'">  Create</button></center>
+   <!-- <button><a>class='btn btn-primary pull-right'> href="/Create_Method" type="button" class="button">Add New Record</a></button> -->
+   <button onclick="cancel()"> Cancel</button>
+
+
+
+    
+    <thead>  
+    <tr>
+        <th > Date </th>
+        <th scope="col"> Document Number </th>
+        <th> Balance</th>
+        <th> Verified_By</th>
+        <th> Action </th> 
+    </tr>  
+    </thead>  
+    <tbody>
+  {% for form_transact in transact %}  
+  
+    <tr>  
+        <td> {{form_transact.Date}} </td>
+        <td> {{form_transact.Document_Number}}</td>
+        <td> {{ form_transact.Balance}}</td>
+        <td> {{ form_transact.Verified_By }} </td>
+        <td><button><a href="/update/{{form_transact.id}}"><span class="button" >Update</span></a></button></td>  
+       
+    </tr>  
+{% endfor %}  
+    </tbody>  
+</table>  
+<script>
+  function cancel(){
+    window.location.assign("/master_page")
+  }
+</script>
+
+<!-- <center style="margin: 25px;"><button> <a href="/Create_Method" type="button" class="button">Create</a></button></center> -->
+<!-- <center><a href="/post_method"  type="button" class="btn btn-primary">Add New Record</a></center>   -->
+</body>  
+</html>  
+
+
+

@@ -1,0 +1,401 @@
+
+
+<style>
+    .form-design{
+        display: block;
+        margin: 5px;
+        width: 80%;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    .form-designS{
+        display: block;
+        
+        width: 78%;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    .form-designerS{
+        display: block;
+        margin-left: 1%;
+        width: 64%;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    .contact{
+        padding: 4%;
+        height: 400px;
+    }
+    
+    .contact-info{
+        margin-top:0%;
+    }
+    .contact-info img{
+        margin-bottom: 15%;
+    }
+    .contact-info h2{
+        margin-bottom: 10%;
+    }
+    .col-md-9{
+        background: #fff;
+        margin: 40px;
+        padding: 3%;
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+    }
+    .contact-form label{
+        font-weight:600;
+    }
+    .contact-form button{
+        background: #25274d;
+        color: #fff;
+        font-weight: 600;
+        width: 25%;
+    }
+    .contact-form button:focus{
+        box-shadow:none;
+    }
+    .city {
+      background-color: white;
+      color:black;
+      padding: 2px;
+    }
+    </style>
+     
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+    <script type="text/javascript">
+                        
+        $(function () {
+            
+            $("#getid").change(function () {
+                
+                if ($(this).val() == "Received From") {
+                    $("#dv").show();
+                } else {
+                    $("#dv").hide();
+                }
+            });
+        });
+        $(function () {
+            $("#getid").change(function () {
+                if ($(this).val() == "Issued To") {
+                    
+                    $("#issues").show();
+                } else {
+                    $("#issues").hide();
+    
+                
+                }
+            });
+        });
+        
+        function myFunction() {
+            var rec = document.getElementById("Received_From").value;
+            var iss = document.getElementById("Issued_To");
+            if (iss != null){
+                var issd = iss.value
+            }
+    
+            
+            var material = '{{TransactInventory}}';
+            console.log(material)
+            var remove_reg_exp = material.replace(/&#x27;/g, '"');
+            console.log(remove_reg_exp)
+            var covert_dict = JSON.parse(remove_reg_exp)
+            console.log(covert_dict)
+            var matname = document.getElementById("Material_Names").value;
+            
+            console.log(matname)
+            var selected_mat_quantity = covert_dict[matname]
+            console.log(typeof(selected_mat_quantity))
+            var no_of_issued = document.getElementById("Number_Of_Issued").value;
+            var convert_int = parseInt(no_of_issued)
+            console.log(typeof(int))
+        
+            var no_of_received = document.getElementById("Number_Of_Received").value;
+            
+            var convert_integer = parseInt(no_of_received)
+            console.log(typeof(ints))
+            if (no_of_issued != ""){
+                if (no_of_issued > selected_mat_quantity){
+                    alert("Requirement Is High...Material Quantity is "+ selected_mat_quantity)
+                    document.getElementById("Number_Of_Issued").value="";
+    
+                }
+                else{
+                var issued_balance = selected_mat_quantity - convert_int
+                
+                console.log(typeof(issued_balance))
+                document.getElementById('Balances').value = issued_balance;
+                if (matname == "--Select Material Name--"){
+                    alert("Please Select A Material Name")
+                    document.getElementById("Number_Of_Issued").value="";
+                }
+                if (iss == " "){
+                    alert("Please Enter The Company Where Issued To")
+                    
+                }
+                
+                }
+            }
+            else{
+                var received_balance = selected_mat_quantity + convert_integer
+                console.log(typeof(received_balance))
+                
+                document.getElementById('Balances').value = received_balance;
+                if (matname == "--Select Material Name--"){
+                    alert("Please Select A Material Name")
+                    document.getElementById("Number_Of_Received").value="";
+                }
+                if (rec == ""){
+                    alert("Please Fill Received From")
+                    document.getElementById("Received_From").value="";
+                }
+                
+            }
+    
+        }
+        
+            
+        function validation(){ 
+            var documents = document.getElementById("Document_Number").value;
+            
+            
+    
+            var doc='{{doc_id}}'
+            if (documents==null || documents==" "){
+                alert("Document Number can't be blank");
+                documents.getElementById("Verified_By").value="";
+                
+                return false;
+            } 
+            
+            if (doc.includes(documents)){
+                alert("Document Number Already Exist")
+                documents.getElementById("Verified_By").value="";
+                
+                return false
+            }
+            
+            
+        }
+        
+    
+    
+    
+        
+        function Savedata(){
+            
+            alert("Are You sure To submit The Form")
+          
+        }
+        
+        function cancel() 
+        {
+            window.location.assign("/transact_list")
+        
+        }
+    
+    
+        
+        
+    </script>
+    
+    
+    <h2 style="margin-left: 4%;margin-top: 4%; margin-bottom: -2%;"> Material Stock Updation</h2>
+        <div class="col-md-9" >
+    
+            
+            <form  name= "RegForm" method="POST" class="post-form" action=""    >
+                {% csrf_token %}
+                
+                
+                        <div class="form-group">
+                            <label class="=control-label col-sm-5" ><b>Transaction Type:</b></label>
+                            <select id="getid" id="Transaction_Type" name="Transaction_Type" >
+                            {% if id %}
+                            <option  id="Transaction_Type" name="Transaction_Type" value="{{mat.Transaction_Type}}" selected><b>{{mat.Transaction_Type}}</b></option>
+                            {% else %}
+                            <option disabled="true" id="Transaction_Type" name="Transaction_Type" selected><b>--Select Transaction Type--</b></option>
+                            <option value="Received From">Received From </option>
+                            <option value="Issued To">Issued To</option>
+                            {% endif %} 
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="=control-label col-sm-5" ><b>Material Name:</b></label>
+                            
+                            <select id='Material_Names' name='Material_Names' >
+                                {% if id %}
+                                <input type="text"  class="form-designerS" id="Material_Name" name="Material_Name" value="{{ selected_material_id }}" required>
+                                {% else %}
+                                <option disabled='true' name='Material_Names'onchange="myFunction()" id='Material_Names'  selected><b>--Select Material Name--</b></option>
+                                {% for select in mat_name %}  
+                                <option value="{{ select.Material_Name}}">{{ select.Material_Name}}</option>  
+                                {% endfor %}
+                                {% endif %}
+                            </select> 
+                        </div> 
+                        {% if mat.Transaction_Type == 'Issued To' %}
+                            <div class="form-group">
+                                {% if id %}
+                                <label class="=control-label col-sm-5" ><b>Issued To:</b></label>  
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-design"id="Issue_To" name="Issue_To" value="{{mat.Issue_To}}">
+                                    <label style="margin-left: -1.5%" class="=control-label col-sm-5" ><b>Number Of Issued :</b></label> 
+                                    <input type="text" class="form-design" id="Number_Of_Issued" name="Number_Of_Issued" value="{{mat.Number_Of_Issued}}">
+                                </div>
+                                {%  endif %}
+                            </div>
+                        {% else %}
+    
+    
+                            <div class="form-group">
+                                {% if id %}
+                                <label class="=control-label col-sm-5" ><b>Received From:</b></label>  
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-design" id="Received_From" name="Received_From" value="{{mat.Received_From}}">
+                                    <label style="margin-left: -1.5%" class="=control-label col-sm-10" ><b>Number_Of_Received :</b></label> 
+                                    <input type="text" class="form-design" id="Number_Of_Received" name="Number_Of_Received" value="{{mat.Number_Of_Received}}">
+                                </div>
+                                {%  endif %}
+                            </div>
+                    {% endif %}
+                    <div>
+                        <div id="issues" style="display: none">
+                            <div class="form-group">
+                                <label class="=control-label col-sm-5" ><b>Issued To:</b></label>  
+                                <div class="col-sm-10">
+                                {% if id %}	
+                                <input type="text" class="form-designS" id="Issue_To" name="Issue_To" placeholder="{{ mat.Issue_To }}" > 
+                                {% else %}
+                                <input type="text" class="form-control" id="Issue_To" name="Issue_To" placeholder="{{ form.Issue_To }}" >
+                                {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group"> 
+                                <label class="=control-label col-sm-5" ><b>Number Of Issued :</b></label> 
+                                <div class="col-sm-10">
+                                {% if id %}
+                                <input type="text" class="form-design" id="Number_Of_Issued" name="Number_Of_Issued" placeholder="{{ mat.Number_Of_Issued }}" >
+                                {% else %}
+                                <input type="text" class="form-control" id="Number_Of_Issued" name="Number_Of_Issued" onchange="myFunction()" placeholder="{{ form.Number_Of_Issued }}" >
+                                {% endif %}
+                                </div>
+                            </div>	
+                        </div>
+                        <div id="dv" style="display: none">
+                            <div class="form-group">     
+                                <label class="=control-label col-sm-5" ><b>Received From:</b></label> 
+                                <div class="col-sm-10">
+                                {% if id %}	    
+                                <input type="text" class="form-design" id="Received_From" name="Received_From" placeholder="{{ mat.Received_From }}" >
+                                {% else %}
+                                <input type="text" class="form-control" id="Received_From" name="Received_From"  placeholder="{{ form.Received_From }}">
+                                {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group">          
+                                <label class="=control-label col-sm-5" ><b>Number of Received:</b></label>
+                                <div class="col-sm-10">
+                                {%if id %}
+                                <input type="text" class="form-design" id="Number_Of_Received" name="Number_Of_Received" placeholder="{{ mat.Number_Of_Received }}" >
+                                {% else %}
+                                <input type="text" class="form-control" id="Number_Of_Received" name="Number_Of_Received" onchange="myFunction()" placeholder="{{ form.Number_Of_Received }}" >
+                                {% endif%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-sm-5" ><b>Balance:</b></label>
+                        <div class="col-sm-10">
+                        {% if id%}	
+                        <input type="text" class="form-design" id="Balance" name="Balance" value="{{ mat.Balance }}" required>
+                        {% else %}
+                        <input type="text" class="form-control" id="Balances" name="Balances" required>
+                        {% endif %}
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="form-group">
+                        <label class="=control-label col-sm-5" ><b>Date:</b></label>
+                        <div class="col-sm-10">
+                        {% if id %}
+                        <input type="text" class="form-design" id="Date" name="Date" value="{{ mat.Date }}" required >
+                        {% else %}
+                        <input type="date" class="form-control" id="Date" name="Date" value="{{ form.Date }}" required>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="=control-label col-sm-5" ><b>Document_Number:</b></label>
+                        <div class="col-sm-10">
+                        {%if id %}
+                        <input type="text" class="form-design" id= "Document_Number" name="Document_Number"  value=" {{ mat.Document_Number }}" required >
+                        {% else %}
+                        <input  type="text" class="form-control" id= "Document_Number"  name="Document_Number"   value=" {{ form.Document_Number }}" >
+                        {% endif %}
+                       </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-5"><b>Verification Date:</b></label>
+                        <div class="col-sm-10">
+                        {%if id %}
+                        <input type="text" class="form-design" id="Verification_Date" name="Verification_Date" value="{{ mat.Verification_Date }}" required>
+                        {% else %} 
+                        <input type="date" class="form-control" id="Verification_Date"  name="Verification_Date" value="{{ form.Verification_Date }}" required>
+                        {% endif %} 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-5" ><b>Verified by:</b></label>
+                        <div class="col-sm-10">
+                        {%if id%}
+                        <input type="text" class="form-design" id="Verified_By" name="Verified_By" value="{{ mat.Verified_By }}" required>
+                        {% else %}
+                        <input pattern='[A-Za-z\\s]*' type="text" class="form-control" id="Verified_By" name="Verified_By" onchange="validation()" value="{{ form.Verified_By }}" required >
+                        {% endif %}
+                        </div>
+                      </div>
+                    <div class="form-group">        
+                        <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" id="savedata" onclick="Savedata()" value="submit"/> 
+                        <input type="button" value="Cancel" onclick="cancel()">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+                
+    
+    
+    

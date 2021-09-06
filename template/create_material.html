@@ -1,0 +1,257 @@
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<style>
+  
+	.contact{
+		padding: 4%;
+		height: 400px;
+	}
+	.col-md-3{
+		background: #ff9b00;
+		padding: 4%;
+		border-top-left-radius: 0.5rem;
+		border-bottom-left-radius: 0.5rem;
+	}
+	.contact-info{
+		margin-top:10%;
+	}
+	.contact-info img{
+		margin-bottom: 15%;
+	}
+	.contact-info h2{
+		margin-bottom: 10%;
+	}
+	.col-md-9{
+		background: #fff;
+		padding: 3%;
+		border-top-right-radius: 0.5rem;
+		border-bottom-right-radius: 0.5rem;
+	}
+	.contact-form label{
+		font-weight:600;
+	}
+	.contact-form button{
+		
+		color: #fff;
+		font-weight: 600;
+		width: 25%;
+	}
+	.contact-form button:focus{
+		box-shadow:none;
+	}
+  /* .col-sm-10{
+    float: left 5%;
+    ;display: inline-block;
+    width: 43%;
+    padding-right: 5%; 
+    margin-top: -5px; 
+    width: 50%;
+    margin: -5 auto; 
+  }
+  .col-sm-offset-2 col-sm-10{
+    margin: 10 auto;
+     width:200px; 
+      float: right 5%;
+  } */
+</style>
+
+
+<div class="container contact">
+ 
+  {% if mat_id %}
+  <h3 style="margin-left: 4%;font-weight: bolder;">Update Material</h3>
+   {% else %}
+   <h3 style="margin-left: 4%;font-weight: bolder;">Create Material</h3>
+   {% endif %}
+      <form action=""  method="POST" >
+        {% csrf_token %}
+        
+      
+        <div class="col-md-9">
+        <div class="contact-form">
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="Material_Code">Material Code <span style="color:red">*</span></label>
+            <div class="col-sm-10">  
+
+              {% if mat_id %}        
+                  <input type="text" class="form-control" id="Material_Code" value="{{material.Material_Code}}" name="Material_Code" onclick="myFun()" pattern="^[a-zA-Z0-9]+$" title="Material_Code should be only Numeric or Alphanumeric " required>
+              {%  else %}
+              <input type="text" class="form-control" id="Material_Code"  name="Material_Code"  onchange="validate()" pattern="^[a-zA-Z0-9]+$" title="Material_Code should be only Numeric or Alphanumeric " required >
+             {% endif %} 
+              
+            </div>
+          </div>
+            
+          <div class="form-group">
+              <label class="control-label col-sm-4" for="Material_Name" value="">Material Name <span style="color:red">*</span></label>
+              <div class="col-sm-10">
+
+                {% if mat_id %}
+              <input type="text" class="form-control"  id="Material_Name" value="{{material.Material_Name}}" name="Material_Name" pattern="^[a-zA-Z]+$" title="Material_name should be only charactors" required>
+              {% else %}
+              <input type="text" class="form-control"  id="Material_Name"  name="Material_Name"  pattern="^[a-zA-Z]+$" title="Material_Name should be only charactors" required>
+              {% endif %} 
+
+             
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="control-label col-sm-4" for="Material_Location">Material Location <span style="color:red">*</span></label>
+              <div class="col-sm-10">
+
+                {% if mat_id %}
+              <input type="text" class="form-control" id="Material_Location"  value="{{material.Material_Location}}" name="Material_Location" pattern="^[a-zA-Z]+$" title="Material_Location should be only charactors" required>
+              {% else %}
+              <input type="text" class="form-control" id="Material_Location"  name="Material_Location" pattern="^[a-zA-Z]+$" title="Material_Location should be only charactors" required>
+              {% endif %}
+
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="control-label col-sm-4" for="Unit_of_Measurement">Unit Of Measurement <span style="color:red">*</span></label>
+              <div class="col-sm-10"> 
+
+                {% if mat_id %}         
+              <input type="text" class="form-control" id="Unit_of_Measurement" value="{{material.Unit_of_Measurement}}"  name="Unit_of_Measurement"  pattern="^[a-zA-Z]+$" title="Unit_of_Measurement should be only charactors" required>
+                {% else %}
+                <input type="text" class="form-control" id="Unit_of_Measurement"  name="Unit_of_Measurement" pattern="^[a-zA-Z]+$" title="Unit_of_Measurement should be only charactors" required>
+                {% endif %}
+
+            </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="control-label col-sm-4" for="Maximum_Level">Maximum Level <span style="color:red">*</span></label>
+              <div class="col-sm-10">
+
+                {% if mat_id %}          
+              <input type="text" class="form-control" id="Maximum_Level" value="{{material.Maximum_Level}}" name="Maximum_Level"  pattern="^[1-9]\d*$" title="Maximum_Level should be only positive numbers" required>
+              {% else %}
+              <input type="text" class="form-control" id="Maximum_Level"  name="Maximum_Level" pattern="^[1-9]\d*$" title="Maximum_Level should be only positive numbers" required>
+              {% endif %}
+
+              </div>
+            </div>
+          
+            <div class="form-group">
+              <label class="control-label col-sm-4" for="Minimum_Level">Minimum Level <span style="color:red">*</span></label>
+              <div class="col-sm-10">  
+
+                {% if mat_id %}        
+              <input type="text" class="form-control" id="Minimum_Level"  value="{{material.Minimum_Level}}" name="Minimum_Level" onblur="getVal()" pattern="^[1-9]\d*$" title="Minimum_Level should be only positive numbers" required>
+              {% else %}
+              <input type="" class="form-control" id="Minimum_Level"   name="Minimum_Level"  onchange="getVal()" pattern="^[1-9]\d*$" title="Minimum_Level should be only positive numbers" required>
+              {% endif %}
+
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="control-label col-sm-4" for="Re_order_Level">Re-Order Level <span style="color:red">*</span></label>
+              <div class="col-sm-10">
+
+                {% if mat_id %}         
+              <input type="text" class="form-control" id="Re_order_Level" value="{{material.Re_order_Level}}" name="Re_order_Level"  pattern="^[1-9]\d*$" title="Re_order_Level should be only positive numbers" required>
+              {% else %}
+              <input type="text" class="form-control" id="Re_order_Level"  name="Re_order_Level"  pattern="^[1-9]\d*$" title="Re_order_Level should be only positive numbers" required>
+                {% endif %}
+
+              </div>
+            </div>
+            
+            <div class="form-group">
+               <label class="control-label col-sm-4" for="Quantity">Quantity <span style="color:red">*</span></label>
+               <div class="col-sm-10">  
+
+                {% if mat_id %}        
+              <input type="text" class="form-control" id="Quantity" value="{{material.Quantity}}" name="Quantity"  pattern="^[1-9]\d*$" title="Quantity should be only positive numbers" required>
+              {% else %}
+              <input type="text" class="form-control" id="Quantity"  name="Quantity"  pattern="^[1-9]\d*$" title="Quantity should be only positive numbers" required>
+              {% endif %}
+
+              </div>
+            </div>
+          </form>
+            
+            <div class="form-group">   
+
+              <div class="col-sm-offset-2 col-sm-10">
+
+                <input type="submit" value="Submit" style="height: 25px;width:65px;font-size: 14px;">
+                <input type="button" value="Cancel" onclick="cancel()" style="height: 25px;width:65px;font-size: 14px;"> 
+
+            </div>
+            </div>
+
+    <script>
+
+        function cancel() 
+        {
+            window.location.assign("/material_list")
+        
+        }
+
+        function getVal()
+        {
+         
+          var max_lev=document.getElementById("Maximum_Level").value;
+          var min_lev=document.getElementById("Minimum_Level").value;
+          
+          var max=parseInt(max_lev)
+          var min=parseInt(min_lev)
+
+          if (min > max ){
+           alert("Minimum Level should not be greater than Maximum Level")
+            document.getElementById("Minimum_Level").value="";
+            return false;
+          }
+          else if (min < max){
+            return true;
+          }
+
+         
+        }
+
+        function myFun()
+        {
+          document.getElementById("Material_Code").readOnly = true;
+        }
+
+        function validate()
+        {
+          var mat_code=document.getElementById("Material_Code").value;
+          var code=' '+mat_code
+          var projects = "{{materials}}";
+          var project_names1 = projects.replace(/&#39;/g,'');
+          var project = project_names1.slice(1,-1)
+          var uu = project.toString();
+          var tt = uu.split(',')
+          var nn=tt[0]
+          var xx=' '+nn
+          var list=tt.push(xx)
+          // console.log(xx)
+          
+          // console.log(list)
+          // console.log(tt)
+          // console.log(typeof(tt))
+            if (tt.includes(code)){
+            alert("This material_code already exist")
+            document.getElementById("Material_Code").value="";
+            return false;
+        }
+            else  {
+            return true;
+        }
+        }
+
+   </script>  
+
+
+
+      </div>
+    </div>

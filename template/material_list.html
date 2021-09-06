@@ -1,0 +1,101 @@
+
+{% block content %}
+<style type="text/css">
+ 
+    table {
+    font-family: "Lato","sans-serif";   }       /* added custom font-family  */
+     
+    table.one {                                  
+    margin-bottom: 3em; 
+    border-collapse:collapse;   }   
+     
+    td {                            /* removed the border from the table data rows  */
+    text-align: center;     
+    width: 14em;                    
+    padding: 8px;;   
+    font-size: 1.3rem;    }       
+     
+    th {                              /* removed the border from the table heading row  */
+    text-align: center;                 
+    padding: 8px;
+    background-color: lightblue;       /* added a red background color to the heading cells  */
+    color: white; 
+    width: 3%;
+    font-size: 1.5rem;  }                 /* added a white font color to the heading text */
+     
+    tr {    
+    height: 1em;    }
+     
+    table tr:nth-child(even) {            /* added all even rows a #eee color  */
+        background-color: #eee;     }
+     
+    table tr:nth-child(odd) {            /* added all odd rows a #fff color  */
+    background-color:#fff;      }
+
+    
+     
+</style>
+    
+
+<div class="card-body">
+
+    <h4 style="text-align: center;font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    font-weight: bolder; font-size: 200%;">Material List</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" style="display:none">id</th>
+                <th scope="col">Material Code</th>
+                <th scope="col">Material Name</th>
+                <th scope="col">Material Location</th>
+                <!-- <th scope="col">Unit of Measurement</th>
+                <th scope="col">Maximum Level</th>
+                <th scope="col">Minimum Level</th> -->
+                <th scope="col">Re-Order Level</th>
+                <th scope="col" style="display:none">Quantity</th>
+                <th scope="col">Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for materials in material %}
+            <tr>
+
+                
+                <td style="display:none">{{ materials.id}}</td>
+                <td>{{ materials.Material_Code}}</td>
+                <td>{{ materials.Material_Name}}</td>
+                <td>{{ materials.Material_Location }}</td>
+                <!-- <td>{{ materials.Unit_of_Measurement}}</td>
+                <td>{{ materials.Maximum_Level}}</td>
+                <td>{{ materials.Minimum_Level}}</td> -->
+                <td>{{ materials.Re_order_Level}}</td>
+                <td style="display:none">{{ materials.Quantity}}</td>
+                
+                <td><button><a  href="/material_update/{{materials.id}}"><span class="button" >Update</span></a></button>
+              
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- <div style="margin: 40 auto; width:300px; float:center"> -->
+    <div style="margin: 10 auto; width:200px;  float:right; position:absolute;top:40px;right:-5px; font-weight: 600;">
+    <button type="button" onclick="create()" >Create</button>
+    <button type="button" onclick="cancel()" >Cancel</button>
+    <!-- <button type="button"><a  href="/create_material">Create</a></button> -->
+    <!-- <button type="button"><a  href="/master_page">Cancel</a></button> -->
+</div>
+</div>
+<script>
+    function create(){
+        window.location.assign("/create_material")
+
+    }
+    function cancel(){
+        window.location.assign("/master_page")
+
+    }
+    
+</script>
+{% endblock %}

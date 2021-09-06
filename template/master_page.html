@@ -1,0 +1,100 @@
+
+{% block content %}
+<style type="text/css">
+ 
+    table {
+    font-family: "Lato","sans-serif";   }       /* added custom font-family  */
+     
+    table.one {                                  
+    margin-bottom: 3em; 
+    border-collapse:collapse;   }   
+     
+    td {                            /* removed the border from the table data rows  */
+    text-align: center;     
+    width: 14em;                    
+    padding: 8px;
+    font-size: 1.3rem;       }       
+     
+    th {                              /* removed the border from the table heading row  */
+    text-align: center;                 
+    padding: 8px;
+    background-color: lightblue;       /* added a red background color to the heading cells  */
+    color: white;  
+    width: 3%;
+    font-size: 1.5rem; }                 /* added a white font color to the heading text */
+     
+    tr {    
+    height: 1em;    }
+     
+    table tr:nth-child(even) {            /* added all even rows a #eee color  */
+        background-color: #eee;     }
+     
+    table tr:nth-child(odd) {            /* added all odd rows a #fff color  */
+    background-color:#fff;      }
+     
+    </style>
+
+<div class="card-body">
+
+    <h4 style="text-align: center;font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    font-weight: bolder; font-size: 200%;">Inventory Material List</h4>
+    
+    <!-- <button type="button" style="float: right;" style='margin-right:16px'><a  href="">Transaction</a></button>
+    <button type="button" style="float: right;" style="margin:5px;"><a  href="/material_list">Master</a></button> -->
+    <div style="margin: 10 auto; width:200px;  float:right; position:absolute;top:40px;right:-5px; font-weight: 600;">
+    <input type="button" id=""  value="Master" onclick="master()" >
+    <input type="button" id=""  value="Transaction " onclick="transaction()" >       
+    
+    </div>
+    <script>
+        function master() {
+        window.location.assign("/material_list")
+
+}
+    function transaction(){
+        window.location.assign("/transact_list")
+}
+    </script>
+   
+    
+    <table class="table" >
+        
+
+        <thead>
+            <tr>
+                <th scope="col" ><input type="checkbox" style="display:none"></th>
+                <th scope="col" style="display:none">id</th>
+                <th scope="col">Material Code</th>
+                <th scope="col">Material Name</th>
+                <th scope="col">Material Location</th>
+                <!-- <th scope="col">Unit of Measurement</th>
+                <th scope="col">Maximum Level</th>
+                <th scope="col">Minimum Level</th> -->
+                <th scope="col">Re-Order Level</th>
+                <th scope="col" style="display:none">Quantity</th>
+                
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for materials in material %}
+            <tr>
+
+                <td><input type="checkbox"><a href="/main_list/{{materials.id}}">view</a></td>
+                <td style="display:none">{{ materials.id}}</td>
+                <td>{{ materials.Material_Code}}</td>
+                <td>{{ materials.Material_Name}}</td>
+                <td>{{ materials.Material_Location }}</td>
+                <!-- <td>{{ materials.Unit_of_Measurement}}</td>
+                <td>{{ materials.Maximum_Level}}</td>
+                <td>{{ materials.Minimum_Level}}</td> -->
+                <td>{{ materials.Re_order_Level}}</td>
+                <td style="display:none">{{ materials.Quantity}}</td>
+                
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    
+</div>
+{% endblock %}
