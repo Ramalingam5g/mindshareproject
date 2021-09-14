@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-1co5k)&^-d#nubei%csy#k*yx%v(5@5*!5!l3de^al4cgar7pi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -87,9 +87,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mindshare',
-        'USER': 'root',
+        'USER': 'DESKTOP-RKHM4O6',
         'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'HOST': '192.168.17.222',
         'PORT': '3306',
     }
 }
